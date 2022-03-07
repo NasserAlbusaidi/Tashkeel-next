@@ -19,7 +19,7 @@ export default function Home() {
     e.preventDefault()
     console.log(input)
     
-      await axios.post(`http://127.0.0.1:5000/?input=${input}`, {
+      await axios.post(`https://tashkeel.alkhalilarabic.com/getdiacritics/?original_text=${input}`, {
         headers: {
           'Access-Control-Allow-Origin': '*'
         },
