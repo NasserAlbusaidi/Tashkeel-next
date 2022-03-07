@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 const axios = require('axios');
+import parse from 'html-react-parser';
 
 
 export default function Home() {
@@ -17,7 +18,7 @@ export default function Home() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(input)
+    
     
       await axios.post(`https://tashkeel.alkhalilarabic.com/getdiacritics/?original_text=${input}`, {
         headers: {
@@ -25,13 +26,11 @@ export default function Home() {
         },
         input: input,
       })
-        .then(function (response: { data: any; }) {
-
-         output = response.data.Output
-          console.log(output)          
-          output2 = colorizeTashkeel(output)
-          console.log(output2)
-          setFinal(output2)
+        .then(function (response: { data: any; }) {  
+          output = colorizeTashkeel(response.data.output_all, 'red');
+          setFinal(response.data.output_all)
+          console.log(colorizeTashkeel(final,'red'))
+          
         })
         .catch(function (error: any) {
           console.log(error);
@@ -59,7 +58,7 @@ export default function Home() {
         الكلام بالتشكيل
       </label>
       <div className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" 
-       dangerouslySetInnerHTML={{ __html: final }}/>
+       dangerouslySetInnerHTML={{ __html: colorizeTashkeel( String(final) ,'blue') }}/>
       
       
     </div>
